@@ -20,10 +20,12 @@
   <name>Slider Core</name>
   <packaging>jar</packaging>
   <description>Core Slider Module</description>
+
   <parent>
     <groupId>org.apache.slider</groupId>
     <artifactId>slider</artifactId>
     <version>0.93.0-incubating-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
 
   <build>
@@ -260,45 +262,51 @@
     </dependency>
 
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
+      <groupId>io.hops</groupId>
       <artifactId>hadoop-client</artifactId>
-      <scope>compile</scope>
+      <version>${hadoop.version}</version>
     </dependency>
 
-<!-- if the move to hadoop-hdfs-client JAR causes problems insert this
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
+      <groupId>io.hops</groupId>
       <artifactId>hadoop-hdfs</artifactId>
-      <scope>compile</scope>
+      <version>${hadoop.version}</version>
     </dependency>
--->
 
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
+      <groupId>io.hops</groupId>
       <artifactId>hadoop-hdfs</artifactId>
+      <version>${hadoop.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
+      <groupId>io.hops</groupId>
       <artifactId>hadoop-yarn-client</artifactId>
-      <scope>compile</scope>
+      <version>${hadoop.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
+      <groupId>io.hops</groupId>
+      <artifactId>hadoop-yarn-api</artifactId>
+      <version>${hadoop.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.hops</groupId>
       <artifactId>hadoop-yarn-server-web-proxy</artifactId>
-      <scope>compile</scope>
+      <version>${hadoop.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
+      <groupId>io.hops</groupId>
       <artifactId>hadoop-yarn-registry</artifactId>
-      <scope>compile</scope>
+      <version>${hadoop.version}</version>
     </dependency>
 
     <dependency>
-      <groupId>org.apache.hadoop</groupId>
+      <groupId>io.hops</groupId>
       <artifactId>hadoop-minicluster</artifactId>
+      <version>${hadoop.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -520,6 +528,10 @@
       <groupId>asm</groupId>
       <artifactId>asm</artifactId>
     </dependency>
+      <dependency>
+          <groupId>com.jcraft</groupId>
+          <artifactId>jsch</artifactId>
+      </dependency>
 
   </dependencies>
 

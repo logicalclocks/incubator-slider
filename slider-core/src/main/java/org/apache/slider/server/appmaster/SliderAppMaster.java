@@ -2593,5 +2593,4 @@ public class SliderAppMaster extends AbstractSliderLaunchedService
     //now have the service launcher do its work
     ServiceLauncher.serviceMain(extendedArgs);
   }
-
 }

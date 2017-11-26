@@ -34,12 +34,9 @@
   </organization>
 
   <modules>
-    <module>app-packages/command-logger/application-pkg</module>
-    <module>app-packages/command-logger/slider-pkg</module>
     <module>slider-core</module>
     <module>slider-agent</module>
     <module>slider-assembly</module>
-    <module>slider-funtest</module>
     <!-- the app-packages module is added as a profile-->
   </modules>
 
@@ -111,7 +108,7 @@
     <!-- 
     Java versions
     -->
-    <project.java.src.version>1.7</project.java.src.version>
+    <project.java.src.version>1.8</project.java.src.version>
     <enforced.java.version>${project.java.src.version}</enforced.java.version>
     <groovy.version>2.4.5</groovy.version>
     
@@ -131,7 +128,7 @@
     <!--
     core artifacts
     -->
-    <hadoop.version>2.7.1</hadoop.version>
+    <hadoop.version>2.8.2.2</hadoop.version>
 
     <hbase.version>0.99.0</hbase.version>
     <accumulo.version>1.7.0</accumulo.version>
@@ -176,7 +173,7 @@
     <snakeyaml.version>1.16</snakeyaml.version>
     <storm.version>0.9.3</storm.version>
     <stringtemplate.version>2.4.1</stringtemplate.version>
-    <zookeeper.version>3.4.6</zookeeper.version>
+    <zookeeper.version>3.4.7</zookeeper.version>
 
 
     <!-- artifacts used in plugins -->
@@ -254,6 +251,25 @@
       <releases>
         <enabled>false</enabled>
       </releases>
+    </repository>
+    <repository>
+      <id>sics-release</id>
+      <name>SICS Release Repository</name>
+      <url>http://kompics.sics.se/maven/repository</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+    </repository>
+    <repository>
+      <id>sics-snapshot</id>
+      <name>SICS Snapshot Repository</name>
+      <url>http://kompics.sics.se/maven/snapshotrepository</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
     </repository>
   </repositories>
 
@@ -482,12 +498,6 @@
 
       <dependency>
         <groupId>org.apache.slider</groupId>
-        <artifactId>slider-funtest</artifactId>
-        <version>${project.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.slider</groupId>
         <artifactId>slider-assembly</artifactId>
         <classifier>all</classifier>
         <version>${project.version}</version>
@@ -520,7 +530,7 @@
       </dependency>
 
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-client</artifactId>
         <version>${hadoop.version}</version>
         <exclusions>
@@ -540,7 +550,7 @@
         break the build.
       -->
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-hdfs</artifactId>
         <version>${hadoop.version}</version>
         <exclusions>
@@ -561,7 +571,7 @@
         hadoop-mapreduce-client-jobclient
       -->
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-minicluster</artifactId>
         <version>${hadoop.version}</version>
         <exclusions>
@@ -577,7 +587,7 @@
       </dependency>
 
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-yarn-client</artifactId>
         <version>${hadoop.version}</version>
         <exclusions>
@@ -589,13 +599,13 @@
       </dependency>
 
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-yarn-registry</artifactId>
         <version>${hadoop.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>org.apache.hadoop</groupId>
+        <groupId>io.hops</groupId>
         <artifactId>hadoop-yarn-server-web-proxy</artifactId>
         <version>${hadoop.version}</version>
       </dependency>
@@ -1434,7 +1444,6 @@
                   <exclude>**/rat.txt</exclude>
                   <exclude>**/test_password_file</exclude>
                   <exclude>DISCLAIMER</exclude>
-                  <exclude>app-packages/hbase/target/**</exclude>
                   <exclude>target/*</exclude>
                   <exclude>DEPENDENCIES</exclude>
                 </excludes>
@@ -1445,21 +1454,6 @@
       </build>
     </profile>
 
-    <profile>
-      <id>all-modules</id>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <modules>
-        <module>app-packages</module>
-      </modules>
-    </profile>
-
-    <profile>
-      <id>no-app-packages</id>
-      <modules>
-      </modules>
-    </profile>
 
     <profile>
       <id>apache-release</id>
@@ -1471,12 +1465,9 @@
       separately.
        -->
       <modules>
-        <module>app-packages/command-logger/application-pkg</module>
-        <module>app-packages/command-logger/slider-pkg</module>
         <module>slider-core</module>
         <module>slider-agent</module>
         <module>slider-assembly</module>
-        <module>slider-funtest</module>
       </modules>
       <build>
         <plugins>
