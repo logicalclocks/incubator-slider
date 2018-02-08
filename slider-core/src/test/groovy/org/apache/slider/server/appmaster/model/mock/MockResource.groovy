@@ -23,6 +23,7 @@ import org.apache.hadoop.yarn.api.records.Resource
 class MockResource extends Resource {
   int memory
   int virtualCores
+  int gpus
 
   MockResource(int memory = 0, int vcores = 0) {
     this.memory = memory
@@ -39,10 +40,19 @@ class MockResource extends Resource {
   }
 
   public void setMemorySize(long memory) {
-    this.memory = memory
+    this.memory = memory;
   }
 
   public long getMemorySize() {
-    return memory
+    return memory;
   }
+
+  public void setGPUs(int gpus) {
+    this.gpus = gpus;
+  }
+
+  public int getGPUs() {
+    return gpus;
+  }
+
 }

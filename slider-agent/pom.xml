@@ -17,7 +17,7 @@
    limitations under the License.
 -->
   <parent>
-    <groupId>org.apache.slider</groupId>
+    <groupId>io.hops.slider</groupId>
     <artifactId>slider</artifactId>
     <version>0.93.0-incubating-SNAPSHOT</version>
     <relativePath>../pom.xml</relativePath>

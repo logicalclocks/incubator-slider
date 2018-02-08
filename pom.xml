@@ -16,7 +16,7 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.apache.slider</groupId>
+  <groupId>io.hops.slider</groupId>
   <artifactId>slider</artifactId>
   <name>Slider</name>
   <version>0.93.0-incubating-SNAPSHOT</version>
@@ -59,25 +59,15 @@
   </scm>
 
   <distributionManagement>
-    <site>
-      <id>slider.website</id>
-      <name>Slider Website</name>
-      <url>http://slider.incubator.apache.org/</url>
-    </site>
-    <downloadUrl>http://git-wip-us.apache.org/repos/asf/incubator-slider.git</downloadUrl>
-    <repository>
-      <id>${distMgmtStagingId}</id>
-      <name>${distMgmtStagingName}</name>
-      <url>${distMgmtStagingUrl}</url>
-    </repository>
     <snapshotRepository>
-      <id>${distMgmtSnapshotsId}</id>
-      <name>${distMgmtSnapshotsName}</name>
-      <url>${distMgmtSnapshotsUrl}</url>
+      <id>sics-snapshot-repository</id>
+      <name>SICS snapshot repository</name>
+      <url>scpexe://kompics.i.sics.se/home/maven/snapshotrepository</url>
     </snapshotRepository>
-    
   </distributionManagement>
-  
+
+
+
   <mailingLists>
     <mailingList>
       <name>Developers Mailing List</name>
@@ -85,34 +75,28 @@
       <subscribe>dev-subscribe@slider.incubator.apache.org</subscribe>
       <unsubscribe>dev-unsubscribe@slider.incubator.apache.org</unsubscribe>
       <archive>http://mail-archives.apache.org/mod_mbox/incubator-slider-dev/</archive>
-    </mailingList>    
+    </mailingList>
     <mailingList>
       <name>Commits Mailing List</name>
       <post>commits@slider.incubator.apache.org</post>
       <subscribe>commits-subscribe@slider.incubator.apache.org</subscribe>
       <unsubscribe>commits-unsubscribe@slider.incubator.apache.org</unsubscribe>
       <archive>http://mail-archives.apache.org/mod_mbox/incubator-slider-commits/</archive>
-    </mailingList>    
+    </mailingList>
   </mailingLists>
 
   <properties>
-    <distMgmtSnapshotsId>apache.snapshots.https</distMgmtSnapshotsId>
-    <distMgmtSnapshotsName>Apache Development Snapshot Repository</distMgmtSnapshotsName>
-    <distMgmtSnapshotsUrl>https://repository.apache.org/content/repositories/snapshots</distMgmtSnapshotsUrl>
-    <distMgmtStagingId>apache.staging.https</distMgmtStagingId>
-    <distMgmtStagingName>Apache Release Distribution Repository</distMgmtStagingName>
-    <distMgmtStagingUrl>https://repository.apache.org/service/local/staging/deploy/maven2</distMgmtStagingUrl>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <!-- 
+    <!--
     Java versions
     -->
     <project.java.src.version>1.8</project.java.src.version>
     <enforced.java.version>${project.java.src.version}</enforced.java.version>
     <groovy.version>2.4.5</groovy.version>
-    
-    <!-- 
+
+    <!--
     test options
     -->
 
@@ -123,8 +107,8 @@
     <test.funtests.failIfNoTests>false</test.funtests.failIfNoTests>
     <test.forkMode>always</test.forkMode>
     <!-- path environment variable -->
-    <test.env.path>${env.PATH}</test.env.path>    
-    
+    <test.env.path>${env.PATH}</test.env.path>
+
     <!--
     core artifacts
     -->
@@ -184,11 +168,11 @@
     <groovy-eclipse-compiler.version>2.9.1-01</groovy-eclipse-compiler.version>
     <groovy-eclipse-batch.version>2.3.7-01</groovy-eclipse-batch.version>
     <buildnumber-maven-plugin.version>1.2</buildnumber-maven-plugin.version>
-  
-    
+
+
     <maven.version.range>[3.0.0,)</maven.version.range>
 
-    <!--  Plugin versions    -->  
+    <!--  Plugin versions    -->
     <maven-antrun-plugin.version>1.7</maven-antrun-plugin.version>
     <maven-assembly-plugin.version>2.4</maven-assembly-plugin.version>
     <maven.cobertura.version>2.5.2</maven.cobertura.version>
@@ -224,13 +208,13 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <build.dependency.fail.on.warning>true</build.dependency.fail.on.warning>
     <build.redirect.test.output.to.file>false</build.redirect.test.output.to.file>
-    
+
     <!-- github options-->
     <github.global.server>github</github.global.server>
     <github.site.plugin.version>0.8</github.site.plugin.version>
     <maven-site-plugin.skipDeploy>true</maven-site-plugin.skipDeploy>
     <github.downloads.plugin.version>0.6</github.downloads.plugin.version>
-    
+
     <!-- override point for ASF staging/snapshot repos -->
     <asf.staging>https://repository.apache.org/content/groups/staging/</asf.staging>
     <asf.snapshots>https://repository.apache.org/content/repositories/snapshots/</asf.snapshots>
@@ -280,8 +264,15 @@
       <url>https://repository.apache.org/content/groups/staging/</url>
     </pluginRepository>
   </pluginRepositories>
-  
+
   <build>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh-external</artifactId>
+        <version>1.0</version>
+      </extension>
+    </extensions>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -477,27 +468,27 @@
     <dependencies>
 
       <dependency>
-        <groupId>org.apache.slider</groupId>
+        <groupId>io.hops.slider</groupId>
         <artifactId>slider-core</artifactId>
         <version>${project.version}</version>
       </dependency>
 
       <dependency>
-        <groupId>org.apache.slider</groupId>
+        <groupId>io.hops.slider</groupId>
         <artifactId>slider-core</artifactId>
         <version>${project.version}</version>
         <type>test-jar</type>
       </dependency>
 
       <dependency>
-        <groupId>org.apache.slider</groupId>
+        <groupId>io.hops.slider</groupId>
         <artifactId>slider-agent</artifactId>
         <version>${project.version}</version>
         <type>tar.gz</type>
       </dependency>
 
       <dependency>
-        <groupId>org.apache.slider</groupId>
+        <groupId>io.hops.slider</groupId>
         <artifactId>slider-assembly</artifactId>
         <classifier>all</classifier>
         <version>${project.version}</version>
@@ -691,7 +682,7 @@
       <!-- ======================================================== -->
       <!-- HBASE -->
       <!-- ======================================================== -->
-      
+
       <dependency>
         <groupId>org.apache.hbase</groupId>
         <artifactId>hbase-client</artifactId>
@@ -1152,13 +1143,13 @@
         <artifactId>guava</artifactId>
         <version>${guava.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
         <version>${log4j.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.codehaus.jackson</groupId>
         <artifactId>jackson-core-asl</artifactId>
@@ -1176,13 +1167,13 @@
         <artifactId>jackson-xc</artifactId>
         <version>${jackson.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.codehaus.jackson</groupId>
         <artifactId>jackson-jaxrs</artifactId>
         <version>${jackson.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
@@ -1408,7 +1399,7 @@
       </dependency>
 
     </dependencies>
-    
+
   </dependencyManagement>
 
   <profiles>
@@ -1457,10 +1448,10 @@
 
     <profile>
       <id>apache-release</id>
-      <!-- 
-      Build the release artifacts which become 
+      <!--
+      Build the release artifacts which become
       the official subject of any release vote.
-       
+
       The process explicitly skips the app-packages as they are to be released
       separately.
        -->
@@ -1623,7 +1614,7 @@
         <hadoop.version>2.8.0-SNAPSHOT</hadoop.version>
       </properties>
     </profile>
-    
+
     <profile>
       <!-- hadoop branch-2 builds  -->
       <id>branch-2</id>
@@ -1631,7 +1622,7 @@
         <hadoop.version>2.9.0-SNAPSHOT</hadoop.version>
       </properties>
     </profile>
-    
+
     <profile>
       <!-- hadoop trunk builds  -->
       <id>trunk</id>
@@ -1650,7 +1641,7 @@
 -->
       </properties>
     </profile>
-    
+
     <profile>
       <!-- anything for a jenkins build -->
       <id>jenkins</id>
