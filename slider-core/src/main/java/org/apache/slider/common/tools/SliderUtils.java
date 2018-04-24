@@ -35,7 +35,6 @@ import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.fs.GlobFilter;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.permission.FsPermission;
-import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.nativeio.NativeIO;
 import org.apache.hadoop.net.NetUtils;
 import org.apache.hadoop.security.SecurityUtil;
@@ -69,7 +68,6 @@ import org.apache.slider.core.exceptions.SliderException;
 import org.apache.slider.core.launch.ClasspathConstructor;
 import org.apache.slider.core.main.LauncherExitCodes;
 import org.apache.slider.providers.agent.AgentKeys;
-import org.apache.slider.providers.agent.application.metadata.Component;
 import org.apache.slider.server.services.utility.PatternValidator;
 import org.apache.slider.server.services.workflow.ForkedProcessService;
 import org.apache.zookeeper.server.util.KerberosUtil;
@@ -677,7 +675,7 @@ public final class SliderUtils {
   }
 
   public static String appReportToString(ApplicationReport r,
-      String separator) {
+                                         String separator) {
     StringBuilder builder = new StringBuilder(512);
     builder.append("application ")
            .append(
@@ -1426,11 +1424,11 @@ public final class SliderUtils {
    * @throws IOException trouble copying to HDFS
    */
   public static LocalResource putJar(Map<String, LocalResource> providerResources,
-      SliderFileSystem sliderFileSystem,
-      Class clazz,
-      Path tempPath,
-      String libdir,
-      String jarName
+                                     SliderFileSystem sliderFileSystem,
+                                     Class clazz,
+                                     Path tempPath,
+                                     String libdir,
+                                     String jarName
   )
       throws IOException, SliderException {
     LocalResource res = sliderFileSystem.submitJarWithClass(

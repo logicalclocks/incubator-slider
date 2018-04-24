@@ -20,12 +20,10 @@ package org.apache.slider.server.appmaster;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.health.HealthCheckRegistry;
-import com.codahale.metrics.jvm.GarbageCollectorMetricSet;
-import com.codahale.metrics.jvm.MemoryUsageGaugeSet;
-import com.codahale.metrics.jvm.ThreadStatesGaugeSet;
 import com.google.common.base.Preconditions;
 import com.google.protobuf.BlockingService;
 
+import io.hops.security.HopsUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.CommonConfigurationKeysPublic;
@@ -66,7 +64,11 @@ import org.apache.hadoop.yarn.client.api.async.AMRMClientAsync;
 import org.apache.hadoop.yarn.client.api.async.NMClientAsync;
 import org.apache.hadoop.yarn.client.api.async.impl.NMClientAsyncImpl;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
-import static org.apache.hadoop.yarn.conf.YarnConfiguration.*;
+
+import static org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_SCHEDULER_MINIMUM_ALLOCATION_MB;
+import static org.apache.hadoop.yarn.conf.YarnConfiguration.DEFAULT_RM_SCHEDULER_MINIMUM_ALLOCATION_VCORES;
+import static org.apache.hadoop.yarn.conf.YarnConfiguration.RM_SCHEDULER_MINIMUM_ALLOCATION_MB;
+import static org.apache.hadoop.yarn.conf.YarnConfiguration.RM_SCHEDULER_MINIMUM_ALLOCATION_VCORES;
 import static org.apache.slider.common.Constants.HADOOP_JAAS_DEBUG;
 
 import org.apache.hadoop.yarn.exceptions.InvalidApplicationMasterRequestException;
@@ -184,7 +186,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URL;
@@ -1676,6 +1680,13 @@ public class SliderAppMaster extends AbstractSliderLaunchedService
     BlockingService blockingService = SliderClusterAPI.SliderClusterProtocolPB
         .newReflectiveBlockingService(
             protobufRelay);
+
+    // If HopsTLS is enabled generate a ssl-server.xml file with the user credentials
+    // to be used by the RPC server
+    if (getConfig().getBoolean(CommonConfigurationKeysPublic.IPC_SERVER_SSL_ENABLED,
+        CommonConfigurationKeysPublic.IPC_SERVER_SSL_ENABLED_DEFAULT)) {
+      HopsUtil.generateContainerSSLServerConfiguration(getConfig());
+    }
 
     int port = getPortToRequest();
 

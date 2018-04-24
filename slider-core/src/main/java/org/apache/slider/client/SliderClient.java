@@ -489,8 +489,10 @@ public class SliderClient extends AbstractSliderLaunchedService implements RunSe
   protected void initHadoopBinding() throws IOException, SliderException {
     // validate the client
     validateSliderClientEnvironment(null);
-    //create the YARN client
+    // create the YARN client
     yarnClient = new SliderYarnClientImpl();
+
+    // POC set certificate location
     yarnClient.init(getConfig());
     if (getServiceState() == STATE.STARTED) {
       yarnClient.start();
