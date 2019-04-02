@@ -1764,4 +1764,12 @@
 
   </profiles>
 
+  <distributionManagement>
+    <repository>
+      <id>Hops</id>
+      <name>Hops Repo</name>
+      <url>https://bbc1.sics.se/archiva/repository/Hops/</url>
+    </repository>
+  </distributionManagement>
+
 </project>
