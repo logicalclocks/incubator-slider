@@ -19,7 +19,7 @@
   <groupId>io.hops.slider</groupId>
   <artifactId>slider</artifactId>
   <name>Slider</name>
-  <version>0.93.0-incubating-SNAPSHOT</version>
+  <version>0.93.1-incubating-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <description>
