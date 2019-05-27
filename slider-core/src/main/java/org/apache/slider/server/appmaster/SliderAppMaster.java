@@ -1666,6 +1666,13 @@ public class SliderAppMaster extends AbstractSliderLaunchedService
       throws IOException, SliderException {
     verifyIPCAccess();
 
+    // If HopsTLS is enabled generate a ssl-server.xml file with the user credentials
+    // to be used by the RPC server
+    if (getConfig().getBoolean(CommonConfigurationKeysPublic.IPC_SERVER_SSL_ENABLED,
+        CommonConfigurationKeysPublic.IPC_SERVER_SSL_ENABLED_DEFAULT)) {
+      HopsUtil.generateContainerSSLServerConfiguration(getConfig());
+    }
+
     sliderIPCService = new SliderIPCService(
         this,
         certificateManager,
@@ -1680,13 +1687,6 @@ public class SliderAppMaster extends AbstractSliderLaunchedService
     BlockingService blockingService = SliderClusterAPI.SliderClusterProtocolPB
         .newReflectiveBlockingService(
             protobufRelay);
-
-    // If HopsTLS is enabled generate a ssl-server.xml file with the user credentials
-    // to be used by the RPC server
-    if (getConfig().getBoolean(CommonConfigurationKeysPublic.IPC_SERVER_SSL_ENABLED,
-        CommonConfigurationKeysPublic.IPC_SERVER_SSL_ENABLED_DEFAULT)) {
-      HopsUtil.generateContainerSSLServerConfiguration(getConfig());
-    }
 
     int port = getPortToRequest();
 

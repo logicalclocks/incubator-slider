@@ -1621,6 +1621,8 @@ public final class SliderUtils {
       // and nothing else
       classpath.appendAll(classpath.localJVMClasspath());
     } else {
+      // Add current working directory to classpath
+      classpath.append(".");
       if (sliderConfDir != null) {
         classpath.addClassDirectory(sliderConfDir);
       }
