@@ -229,7 +229,7 @@
     <repository>
      <id>hops-repository</id>
      <name>Hops Repository</name>
-     <url>https://bbc1.sics.se/archiva/repository/Hops/</url>
+     <url>https://archiva.hops.works/repository/Hops/</url>
      <releases>
        <enabled>true</enabled>
      </releases>
